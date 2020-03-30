@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "roomboard">
+  
+  <resultMap type="roomboardDto" id="roomboardMap">
+  	<result property="tno" column="T_NO"/>
+  	<result property="tname" column="T_NAME"/>
+  	<result property="ttitle" column="T_TITLE"/>
+  	<result property="titem" column="T_ITEM"/>
+  	<result property="tpicture" column="T_PICTURE"/>
+  	<result property="tcontent" column="T_CONTENT"/>
+  	<result property="taddress" column="T_ADDRESS"/>
+  </resultMap>
+  
+  <select id="selectList" resultMap="roomboardMap">
+  	select * from testboard
+  </select>
+  
+  
+</mapper>

@@ -19,6 +19,9 @@
 	href="resources/user/css/room_search.css">
 <jsp:include page="/WEB-INF/views/user/header.jsp" />
 <script type="text/javascript">
+
+
+
 function favoriteclick(){
 	
 	$(".favorite").on("click",function(e){
@@ -35,16 +38,21 @@ function favoriteclick(){
 </script>
 
 </head>
+
 <body>
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a8ded785b631dc1b3efa28d959d4d6d5&libraries=services"></script>
 
 	<div class="container">
-		<form>
+		<form method="post">
 			<div class="searchheader">
 				<div class="keyword">
-					<input type="text" name="keyword" placeholder="잠실동"
-						class="searchbar" /> <a onclick="return submit()">검색</a>
+					<a>
+					<input type="text" id="keyword" name="keyword" placeholder="잠실동" class="searchbar" /> 
+					</a>
+					<a>
+						<img id="img1" src="resources/user/img/search.PNG" style="width:45px; height:45px; cursor:pointer; margin-bottom:6px;" onclick="searchPlace()"/>		
+					</a>
 				</div>
 				<div class="filter">
 					<div class="smallfilter">
@@ -131,10 +139,19 @@ function favoriteclick(){
 <jsp:include page="/WEB-INF/views/user/footer.jsp" />
 
 	<script type="text/javascript">
+		$(document).ready(function(){
+			
+			var keyword = "${keyword}";
+			document.getElementById('keyword').value = keyword;
+			searchPlace();
+			
+		});
+	
 		// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 		var infowindow = new kakao.maps.InfoWindow({
 			zIndex : 1
 		});
+		var coordXY = document.getElementById("coordXY");	//검색지도 경도위도 알아내기
 		var container = document.getElementById('map');
 		var options = {
 			center : new kakao.maps.LatLng(37.271, 127.435),
@@ -143,9 +160,38 @@ function favoriteclick(){
 
 		var map = new kakao.maps.Map(container, options); //지도 생성
 
+		//주소 - 좌표 변환 객체 생성
+		var geocoder=new kakao.maps.services.Geocoder();
+		
+		//주소로 좌표 검색
+// 		geocoder.addressSearch(keyword, function(result, status){
+			
+// 			//정상적으로 검색이 완료됐을 경우
+// 			if(status===kakao.maps.services.Status.OK){
+// 				var coords=new kakao.maps.LataLng(result[0].y, result[0].x);
+// 				yy = result[0].x;
+// 				xx = result[0].y;
+				
+// 				//결과값으로 받은 위치를 마커로 표시
+// 				var marker = new kakao.maps.Marker({
+// 					map : map,
+// 					position: coords
+// 				});
+				
+// 				//인포윈도우로 장소에 대한 설명을 표시
+// 			}
+// 		})
+		
 		var ps = new kakao.maps.services.Places(); //장소 검색 객체 생성
-
-		ps.keywordSearch('롯데캐슬', placesSearchCB); //키워드로 장소를 검색
+		
+		function searchPlace(){
+			var keyword = document.getElementById('keyword').value;
+			
+			
+			
+			ps.keywordSearch(keyword, placesSearchCB); //키워드로 장소를 검색
+		}
+		
 
 		//키워드 검색 완료 시 호출되는 콜백함수
 		function placesSearchCB(data, status, pagination) {

@@ -7,9 +7,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.finalproject.mobang.user.biz.reviewBiz;
+import com.finalproject.mobang.user.biz.roomboardBiz;
+import com.finalproject.mobang.user.dao.roomboardDao;
+import com.finalproject.mobang.user.dto.roomboardDto;
 
 /**
  * Handles requests for the application home page.
@@ -21,20 +27,25 @@ public class HomeController {
 	
 	@Autowired
 	private reviewBiz biz;
+	private roomboardBiz roombiz;
+	private roomboardDao roomdao;
+	private roomboardDto roomdto;
 
 	@RequestMapping(value = "/")
 	public String home(Locale locale, Model model) {
 		logger.info("home");
 
+		model.addAttribute("roomlist", roombiz.selectList());
+		
 		
 		return "user/user_home";
 	}
 	
 	
-	@RequestMapping(value = "home.user")
+	@RequestMapping(value = "/home.user")
 	public String mainhome(Locale locale, Model model) {
 		logger.info("home");
-
+		
 		
 		return "user/user_home";
 	}
@@ -68,13 +79,24 @@ public class HomeController {
 		return "user/room_search";
 	}
 	
+	@RequestMapping(value="/homesearch.user")
+	public String homesearch(Model model, String keyword) {
+		//String keyword = (String) model.getAttribute("keyword");
+		
+		model.addAttribute("keyword", keyword);
+		
+		return "user/room_search";
+	}
+	
+	
 	@RequestMapping(value="/review.user")
 	public String review(Model model) {
 		
 		
-		logger.info("select list");
+		logger.info("roomlist");
 		
-		model.addAttribute("list", biz.selectList());
+		model.addAttribute("roomlist", roombiz.selectList());
+		logger.info("roomdto : "+roomdto);
 		
 		return "user/user_review";
 	}

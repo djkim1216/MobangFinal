@@ -4,6 +4,7 @@
 
 	<typeAliases>
 		<typeAlias type="com.finalproject.mobang.user.dto.reviewDto" alias="reviewDto"/>
+		<typeAlias type="com.finalproject.mobang.user.dto.roomboardDto" alias="roomboardDto"/>
 	</typeAliases>
 
 
@@ -11,6 +12,6 @@
 	<!-- src/main/resources/mybatis/board-mapper.xml -->
 	<mappers>
 		<mapper resource="/mybatis/board-mapper.xml"/>
+		<mapper resource="/mybatis/roomboard-mapper.xml"/>
 	</mappers>
-
 </configuration>

@@ -8,7 +8,7 @@ function menuevent(){
 	$('.first').hover(function(){
 		$(this).find('a').css('color','rgb(51, 85, 139)');
 		$(this).find('article').css('display','inline');
-		$('.submenu').hover(function(){
+		$('.first .submenu').hover(function(){
 			$(this).css({'background-color':'rgba(51,85,139,0.5)','color':'white'});
 		},function(){
 			$(this).css({'background-color':'','color':'rgb(102, 102, 102)'});

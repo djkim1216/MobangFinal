@@ -30,16 +30,18 @@
 			<th>평가</th>
 		</tr>
 		<c:choose>
-			<c:when test="${empty list }">
+			<c:when test="${empty roomlist }">
 				<tr><td colspan="3">----------------작성된 글이 존재하지 않습니다--------------------</td></tr>
 			</c:when>
 			<c:otherwise>
-				<c:forEach items="${list }" var="dto">
+				<c:forEach items="${roomlist }" var="dto">
 					<tr>
-						<td>${dto.myno }</td>
-						<td>${dto.mycontent }</td>
-						<td>${dto.mydate }</td>
+						<td>${dto.tno }</td>
+						<td>${dto.taddress }</td>
+						<td>${dto.ttitle }</td>
 					</tr>
+					<div style="width: 250px; height: 250px; cursor: pointer; background-image : url('${dto.tpicture}');">	
+						</div>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
